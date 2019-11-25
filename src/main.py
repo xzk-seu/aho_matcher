@@ -12,39 +12,39 @@ DICT_DIR = join(DATA_DIR, "dict")
 AHO_DIR = join(DATA_DIR, "aho")
 
 
-def load_aho(path, Type='pkl'):
+def load_aho(path, f_type='pkl'):
     """
         直接load一个匹配器对象
         ------------------------------------------
         Args:
             path: 匹配器对象路径
-            Type: 对象序列化类型，只支持pkl
+            f_type: 对象序列化类型，只支持pkl
 
         Returns:
             一个匹配器对象
 
     """
     if exists(path):
-        if Type == 'pkl':
+        if f_type == 'pkl':
             return pickle.load(open(path, 'rb'))
 
 
-def build_aho(path, Type='yml'):
+def build_aho(path, f_type='yml'):
     """
         重新构建一个匹配器对象
         ------------------------------------------
         Args:
             path:
-            Type:
+            f_type:
 
         Returns:
 
     """
     if exists(path):
         d = None
-        if Type is 'yml':
-            d = yaml.load(open(path, 'r', encoding='utf-8'))
-        elif Type is 'json':
+        if f_type is 'yml':
+            d = yaml.load(open(path, 'r', encoding='utf-8'), Loader=yaml.SafeLoader)
+        elif f_type is 'json':
             d = json.load(open(path, 'r', encoding='utf-8'))
 
         if d:
@@ -57,7 +57,7 @@ def save_aho(aho, path):
 
 if __name__ == '__main__':
     dict_path = join(DICT_DIR, 'relation.yml')
-    aho_path = join(AHO_DIR, 'relation.yml')
+    aho_path = join(AHO_DIR, 'relation.pkl')
 
     # 示例1: 构建一个匹配器对象并保存
     aho = build_aho(dict_path)  # load a dict from path
